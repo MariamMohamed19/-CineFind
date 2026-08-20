@@ -1,16 +1,18 @@
-# FastAPI Project 🚀
+# 🎬 CineFind
 
-A simple **FastAPI** project built with Python to learn and practice backend API development.
+CineFind is a simple movie search project built with **Python** and **FastAPI**.
+The project helped me practice backend API development and understand how FastAPI works with Python.
 
-## 🛠️ Technologies & Libraries
+## 🚀 Technologies & Libraries
 
-* **Python**
-* **FastAPI** – used to build the API and backend endpoints.
-* **Uvicorn** – used as the ASGI server to run the FastAPI application.
-* **Pydantic** – used for data validation and defining request/response models.
-* **Virtual Environment (venv)** – used to isolate the project's dependencies.
+* **Python** – main programming language.
+* **FastAPI** – used to build the backend API and endpoints.
+* **Uvicorn** – used to run the FastAPI application.
+* **Pydantic** – used for data validation.
+* **FastAPI CLI** – used with FastAPI's standard tools.
+* **Virtual Environment (venv)** – used to isolate project dependencies.
 
-## 📌 What I Learned
+## 📚 What I Learned
 
 Through this project, I learned how to:
 
@@ -18,43 +20,49 @@ Through this project, I learned how to:
 * Build API endpoints.
 * Handle HTTP requests.
 * Validate data using Pydantic.
-* Run a FastAPI application using Uvicorn.
+* Run FastAPI using Uvicorn.
 * Work with a Python virtual environment.
-* Test API endpoints using FastAPI's interactive documentation.
+* Use FastAPI interactive API documentation.
+* Manage project dependencies using `requirements.txt`.
+* Upload and manage a project using Git and GitHub.
 
-## ▶️ How to Run
+## ▶️ How to Run the Project
 
-Create and activate a virtual environment:
-
-```bash
-python -m venv venv
-```
-
-Activate it on Windows:
+### 1. Clone the repository
 
 ```bash
-venv\Scripts\activate
+git clone https://github.com/MariamMohamed19/-CineFind.git
 ```
 
-Install the required libraries:
+### 2. Create a virtual environment
 
 ```bash
-pip install fastapi uvicorn
+python -m venv .venv
 ```
 
-Run the application:
+### 3. Activate the virtual environment
+
+Windows:
+
+```bash
+.venv\Scripts\activate
+```
+
+### 4. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 5. Run the FastAPI application
 
 ```bash
 python -m uvicorn FastAPI__APP:app --reload
 ```
 
-Then open:
+### 6. Open the API documentation
 
-```text
-http://127.0.0.1:8000
-```
-
-For the interactive API documentation:
+After running the server, open:
 
 ```text
 http://127.0.0.1:8000/docs
@@ -62,4 +70,6 @@ http://127.0.0.1:8000/docs
 
 ## 👩‍💻 About
 
-This project is part of my journey in learning **Python, Backend Development, and FastAPI** and building a stronger foundation in AI and software development.
+This project is part of my journey in learning **Python, Backend Development, FastAPI, and AI**.
+
+I'm continuously building projects to improve my programming and software development skills.
