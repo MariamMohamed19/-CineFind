@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>FilmFinder | Movie Discovery</title>
+
+    <style>
+
+        /* =========================
+           RESET
+        ========================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        /* =========================
+           COLORS
+        ========================= */
+
+        :root {
+
+            --navy: #0B1F3A;
+
+            --navy-light: #163A63;
+
+            --blue: #2563EB;
+
+            --white: #FFFFFF;
+
+            --background: #F5F7FA;
+
+            --text: #172033;
+
+            --muted: #64748B;
+
+            --border: #D8E0EA;
+
+            --light: #EEF2F7;
+
+        }
+
+
+        /* =========================
+           BODY
+        ========================= */
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                "Segoe UI",
+                Tahoma,
+                Geneva,
+                Verdana,
+                sans-serif;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    #F8FAFC 0%,
+                    #EEF2F7 50%,
+                    #E8EDF4 100%
+                );
+
+            color: var(--text);
+
+            padding: 55px 20px;
+
+        }
+
+
+        /* =========================
+           CONTAINER
+        ========================= */
+
+        .container {
+
+            width: 100%;
+
+            max-width: 900px;
+
+            margin: auto;
+
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .header {
+
+            text-align: center;
+
+            margin-bottom: 40px;
+
+        }
+
+
+        /* =========================
+           LOGO
+        ========================= */
+
+        .logo {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            font-size: 3rem;
+
+            font-weight: 800;
+
+            letter-spacing: -2px;
+
+            color: var(--navy);
+
+        }
+
+
+        .logo-icon {
+
+            width: 45px;
+
+            height: 45px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 12px;
+
+            color: white;
+
+            font-size: 20px;
+
+            background: var(--navy);
+
+            box-shadow:
+
+                0 8px 20px
+                rgba(11, 31, 58, 0.20);
+
+            transition: 0.25s ease;
+
+        }
+
+
+        .logo-icon:hover {
+
+            transform:
+                scale(1.05)
+                rotate(-4deg);
+
+        }
+
+
+        /* =========================
+           TAGLINE
+        ========================= */
+
+        .tagline {
+
+            margin-top: 8px;
+
+            color: var(--muted);
+
+            font-size: 1rem;
+
+        }
+
+
+        /* =========================
+           SEARCH WRAPPER
+        ========================= */
+
+        .search-wrapper {
+
+            max-width: 720px;
+
+            margin: auto;
+
+        }
+
+
+        /* =========================
+           SEARCH BOX
+        ========================= */
+
+        .search-box {
+
+            display: flex;
+
+            gap: 10px;
+
+            padding: 7px;
+
+            background: var(--white);
+
+            border: 1px solid var(--border);
+
+            border-radius: 15px;
+
+            box-shadow:
+
+                0 12px 35px
+                rgba(11, 31, 58, 0.08);
+
+            transition: 0.25s ease;
+
+        }
+
+
+        .search-box:focus-within {
+
+            border-color:
+                rgba(37, 99, 235, 0.45);
+
+            box-shadow:
+
+                0 15px 40px
+                rgba(11, 31, 58, 0.12);
+
+        }
+
+
+        /* =========================
+           INPUT
+        ========================= */
+
+        #movieTitle {
+
+            flex: 1;
+
+            border: none;
+
+            outline: none;
+
+            padding:
+                15px 18px;
+
+            border-radius: 10px;
+
+            font-size: 1rem;
+
+            color: var(--text);
+
+            background:
+                #F8FAFC;
+
+        }
+
+
+        #movieTitle::placeholder {
+
+            color:
+                #94A3B8;
+
+        }
+
+
+        /* =========================
+           SEARCH BUTTON
+        ========================= */
+
+        #searchButton {
+
+            border: none;
+
+            padding:
+                0 28px;
+
+            border-radius: 10px;
+
+            background:
+                var(--navy);
+
+            color: white;
+
+            font-size:
+                0.95rem;
+
+            font-weight:
+                700;
+
+            cursor: pointer;
+
+            transition:
+
+                transform 0.15s ease,
+
+                background 0.15s ease,
+
+                box-shadow 0.15s ease;
+
+        }
+
+
+        #searchButton:hover {
+
+            background:
+                var(--navy-light);
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+
+                0 8px 18px
+                rgba(11, 31, 58, 0.20);
+
+        }
+
+
+        /* Button when clicked */
+
+        #searchButton:active {
+
+            transform:
+                scale(0.96);
+
+            background:
+                #071426;
+
+            box-shadow: none;
+
+        }
+
+
+        #searchButton:disabled {
+
+            cursor:
+                wait;
+
+            opacity:
+                0.75;
+
+        }
+
+
+        /* =========================
+           ERROR
+        ========================= */
+
+        .error {
+
+            display: none;
+
+            margin-top: 18px;
+
+            padding:
+                12px 16px;
+
+            border-radius:
+                10px;
+
+            background:
+                #FFF4F4;
+
+            color:
+                #C53030;
+
+            border:
+                1px solid #FED7D7;
+
+            text-align:
+                center;
+
+        }
+
+
+        /* =========================
+           MOVIE CARD
+        ========================= */
+
+        .movie-card {
+
+            display: none;
+
+            margin-top:
+                35px;
+
+            padding:
+                28px;
+
+            gap:
+                30px;
+
+            background:
+                #FFFFFF;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                18px;
+
+            box-shadow:
+
+                0 15px 40px
+                rgba(11, 31, 58, 0.10);
+
+            animation:
+                appear 0.4s ease;
+
+        }
+
+
+        .movie-card.show {
+
+            display:
+                flex;
+
+        }
+
+
+        /* =========================
+           CARD ANIMATION
+        ========================= */
+
+        @keyframes appear {
+
+            from {
+
+                opacity:
+                    0;
+
+                transform:
+                    translateY(12px);
+
+            }
+
+            to {
+
+                opacity:
+                    1;
+
+                transform:
+                    translateY(0);
+
+            }
+
+        }
+
+
+        /* =========================
+           POSTER
+        ========================= */
+
+        .poster {
+
+            width:
+                210px;
+
+            height:
+                310px;
+
+            object-fit:
+                cover;
+
+            border-radius:
+                14px;
+
+            background:
+                var(--light);
+
+            box-shadow:
+
+                0 12px 30px
+                rgba(11, 31, 58, 0.18);
+
+        }
+
+
+        /* =========================
+           MOVIE INFORMATION
+        ========================= */
+
+        .movie-info {
+
+            flex:
+                1;
+
+            padding-top:
+                8px;
+
+        }
+
+
+        .movie-info h2 {
+
+            font-size:
+                2rem;
+
+            margin-bottom:
+                12px;
+
+            color:
+                var(--navy);
+
+        }
+
+
+        /* =========================
+           SMALL LINE
+        ========================= */
+
+        .line {
+
+            width:
+                45px;
+
+            height:
+                4px;
+
+            border-radius:
+                10px;
+
+            background:
+                var(--navy);
+
+            margin-bottom:
+                20px;
+
+        }
+
+
+        /* =========================
+           BADGES
+        ========================= */
+
+        .badges {
+
+            display:
+                flex;
+
+            gap:
+                10px;
+
+            margin-bottom:
+                20px;
+
+            flex-wrap:
+                wrap;
+
+        }
+
+
+        .badge {
+
+            padding:
+                7px 13px;
+
+            border-radius:
+                20px;
+
+            font-size:
+                0.82rem;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .year {
+
+            background:
+                #EEF2F7;
+
+            color:
+                var(--navy);
+
+        }
+
+
+        .rating {
+
+            background:
+                #E8EEF8;
+
+            color:
+                var(--navy-light);
+
+        }
+
+
+        /* =========================
+           PLOT
+        ========================= */
+
+        .plot {
+
+            color:
+                var(--muted);
+
+            line-height:
+                1.8;
+
+            font-size:
+                0.98rem;
+
+            max-width:
+                520px;
+
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .footer {
+
+            text-align:
+                center;
+
+            margin-top:
+                45px;
+
+            color:
+                #94A3B8;
+
+            font-size:
+                0.85rem;
+
+        }
+
+
+        .footer span {
+
+            color:
+                var(--navy);
+
+            font-weight:
+                700;
+
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 650px) {
+
+            body {
+
+                padding:
+                    35px 15px;
+
+            }
+
+
+            .logo {
+
+                font-size:
+                    2.3rem;
+
+            }
+
+
+            .logo-icon {
+
+                width:
+                    38px;
+
+                height:
+                    38px;
+
+                font-size:
+                    18px;
+
+            }
+
+
+            .search-box {
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            #searchButton {
+
+                padding:
+                    15px;
+
+            }
+
+
+            .movie-card.show {
+
+                flex-direction:
+                    column;
+
+                align-items:
+                    center;
+
+                text-align:
+                    center;
+
+            }
+
+
+            .poster {
+
+                width:
+                    200px;
+
+                height:
+                    295px;
+
+            }
+
+
+            .movie-info {
+
+                width:
+                    100%;
+
+            }
+
+
+            .movie-info h2 {
+
+                font-size:
+                    1.7rem;
+
+            }
+
+
+            .line {
+
+                margin:
+                    0 auto 20px;
+
+            }
+
+
+            .badges {
+
+                justify-content:
+                    center;
+
+            }
+
+
+            .plot {
+
+                max-width:
+                    100%;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header class="header">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ▶
+            </div>
+
+            FilmFinder
+
+        </div>
+
+
+        <p class="tagline">
+
+            Discover your next favorite movie.
+
+        </p>
+
+    </header>
+
+
+    <!-- =========================
+         SEARCH
+    ========================== -->
+
+    <div class="search-wrapper">
+
+        <div class="search-box">
+
+
+            <input
+
+                type="text"
+
+                id="movieTitle"
+
+                placeholder="Search for a movie..."
+
+                autocomplete="off"
+
+            >
+
+
+            <button
+
+                id="searchButton"
+
+                onclick="searchMovie()"
+
+            >
+
+                Search
+
+            </button>
+
+
+        </div>
+
+
+        <p
+
+            id="error"
+
+            class="error"
+
+        >
+
+        </p>
+
+    </div>
+
+
+    <!-- =========================
+         MOVIE CARD
+    ========================== -->
+
+    <div
+
+        id="movieCard"
+
+        class="movie-card"
+
+    >
+
+
+        <img
+
+            id="poster"
+
+            class="poster"
+
+            src=""
+
+            alt="Movie Poster"
+
+        >
+
+
+        <div class="movie-info">
+
+
+            <h2
+
+                id="title"
+
+            >
+
+            </h2>
+
+
+            <div class="line"></div>
+
+
+            <div class="badges">
+
+
+                <span
+
+                    id="year"
+
+                    class="badge year"
+
+                >
+
+                </span>
+
+
+                <span
+
+                    id="rating"
+
+                    class="badge rating"
+
+                >
+
+                </span>
+
+
+            </div>
+
+
+            <p
+
+                id="plot"
+
+                class="plot"
+
+            >
+
+            </p>
+
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <div class="footer">
+
+        Built with
+
+        <span>FastAPI</span>
+
+        · Movie Discovery API
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+    /* =========================
+       API URL
+    ========================= */
+
+    const API_URL =
+        "http://127.0.0.1:8000";
+
+
+    /* =========================
+       SEARCH MOVIE
+    ========================= */
+
+    async function searchMovie() {
+
+
+        const title =
+
+            document
+
+                .getElementById(
+                    "movieTitle"
+                )
+
+                .value
+
+                .trim();
+
+
+        const errorBox =
+
+            document
+
+                .getElementById(
+                    "error"
+                );
+
+
+        const movieCard =
+
+            document
+
+                .getElementById(
+                    "movieCard"
+                );
+
+
+        const button =
+
+            document
+
+                .getElementById(
+                    "searchButton"
+                );
+
+
+        /* Hide old results */
+
+        errorBox.style.display =
+            "none";
+
+
+        movieCard.classList.remove(
+            "show"
+        );
+
+
+        /* Check input */
+
+        if (!title) {
+
+            errorBox.textContent =
+                "Please enter a movie title.";
+
+            errorBox.style.display =
+                "block";
+
+            return;
+
+        }
+
+
+        /* Loading */
+
+        button.textContent =
+            "Searching...";
+
+        button.disabled =
+            true;
+
+
+        try {
+
+
+            /* Send request to FastAPI */
+
+            const response =
+
+                await fetch(
+
+                    `${API_URL}/search?title=${encodeURIComponent(title)}`
+
+                );
+
+
+            const movie =
+
+                await response.json();
+
+
+            /* Check response */
+
+            if (!response.ok) {
+
+                throw new Error(
+
+                    movie.detail ||
+
+                    "Movie not found."
+
+                );
+
+            }
+
+
+            /* Poster */
+
+            document
+
+                .getElementById(
+                    "poster"
+                )
+
+                .src =
+
+                (
+
+                    movie.poster &&
+
+                    movie.poster !== "N/A"
+
+                )
+
+                ?
+
+                movie.poster
+
+                :
+
+                "https://via.placeholder.com/300x445?text=No+Poster";
+
+
+            /* Title */
+
+            document
+
+                .getElementById(
+                    "title"
+                )
+
+                .textContent =
+
+                movie.title;
+
+
+            /* Year */
+
+            document
+
+                .getElementById(
+                    "year"
+                )
+
+                .textContent =
+
+                movie.year;
+
+
+            /* Rating */
+
+            document
+
+                .getElementById(
+                    "rating"
+                )
+
+                .textContent =
+
+                "★ " +
+
+                (
+
+                    movie.rating &&
+
+                    movie.rating !== "N/A"
+
+                    ?
+
+                    movie.rating
+
+                    :
+
+                    "--"
+
+                );
+
+
+            /* Plot */
+
+            document
+
+                .getElementById(
+                    "plot"
+                )
+
+                .textContent =
+
+                movie.plot &&
+
+                movie.plot !== "N/A"
+
+                ?
+
+                movie.plot
+
+                :
+
+                "No description available.";
+
+
+            /* Show card */
+
+            movieCard.classList.add(
+                "show"
+            );
+
+
+        }
+
+        catch (error) {
+
+
+            errorBox.textContent =
+
+                "Movie not found. Please try another title.";
+
+
+            errorBox.style.display =
+                "block";
+
+        }
+
+
+        finally {
+
+
+            button.textContent =
+                "Search";
+
+
+            button.disabled =
+                false;
+
+        }
+
+    }
+
+
+    /* =========================
+       ENTER KEY
+    ========================= */
+
+    document
+
+        .getElementById(
+            "movieTitle"
+        )
+
+        .addEventListener(
+
+            "keypress",
+
+            function(event) {
+
+
+                if (
+                    event.key === "Enter"
+                ) {
+
+                    searchMovie();
+
+                }
+
+            }
+
+        );
+
+
+</script>
+
+
+</body>
+
+</html>
